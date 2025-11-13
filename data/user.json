@@ -1,0 +1,62 @@
+{
+  "id": "user-001",
+  "firstName": "María",
+  "lastName": "González",
+  "email": "maria.gonzalez@example.com",
+  "phone": "+1 (555) 123-4567",
+  "language": "es",
+  "currency": "USD",
+  "loyaltyTier": "gold",
+  "loyaltyPoints": 2450,
+  "upcomingFlight": {
+    "flightNumber": "UA1234",
+    "airline": "United Airlines",
+    "departure": {
+      "airport": "JFK",
+      "city": "New York",
+      "terminal": "T1",
+      "date": "2025-11-20T14:30:00Z",
+      "gate": "A12"
+    },
+    "arrival": {
+      "airport": "MAD",
+      "city": "Madrid",
+      "terminal": "T4",
+      "date": "2025-11-21T03:45:00Z"
+    },
+    "class": "Business",
+    "seat": "12A"
+  },
+  "preferences": {
+    "theme": "light",
+    "notifications": true,
+    "emailUpdates": true
+  },
+  "savedPaymentMethods": [
+    {
+      "id": "card-001",
+      "type": "credit",
+      "brand": "Visa",
+      "last4": "4242",
+      "expiryMonth": 12,
+      "expiryYear": 2026,
+      "isDefault": true
+    }
+  ],
+  "orderHistory": [
+    {
+      "id": "order-001",
+      "date": "2025-10-15T10:30:00Z",
+      "total": 245.99,
+      "items": 3,
+      "status": "completed"
+    },
+    {
+      "id": "order-002",
+      "date": "2025-09-08T15:22:00Z",
+      "total": 89.50,
+      "items": 1,
+      "status": "completed"
+    }
+  ]
+}

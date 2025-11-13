@@ -1,0 +1,174 @@
+[
+  {
+    "id": "perfumes",
+    "name": {
+      "en": "Perfumes & Fragrances",
+      "es": "Perfumes y Fragancias"
+    },
+    "icon": "sparkles",
+    "subcategories": [
+      {
+        "id": "women",
+        "name": {
+          "en": "Women",
+          "es": "Mujeres"
+        }
+      },
+      {
+        "id": "men",
+        "name": {
+          "en": "Men",
+          "es": "Hombres"
+        }
+      },
+      {
+        "id": "unisex",
+        "name": {
+          "en": "Unisex",
+          "es": "Unisex"
+        }
+      }
+    ]
+  },
+  {
+    "id": "alcohol",
+    "name": {
+      "en": "Alcohol & Spirits",
+      "es": "Alcohol y Licores"
+    },
+    "icon": "wine",
+    "subcategories": [
+      {
+        "id": "whisky",
+        "name": {
+          "en": "Whisky",
+          "es": "Whisky"
+        }
+      },
+      {
+        "id": "champagne",
+        "name": {
+          "en": "Champagne",
+          "es": "Champán"
+        }
+      },
+      {
+        "id": "cognac",
+        "name": {
+          "en": "Cognac",
+          "es": "Coñac"
+        }
+      },
+      {
+        "id": "vodka",
+        "name": {
+          "en": "Vodka",
+          "es": "Vodka"
+        }
+      }
+    ]
+  },
+  {
+    "id": "electronics",
+    "name": {
+      "en": "Electronics",
+      "es": "Electrónica"
+    },
+    "icon": "device",
+    "subcategories": [
+      {
+        "id": "audio",
+        "name": {
+          "en": "Audio",
+          "es": "Audio"
+        }
+      },
+      {
+        "id": "cameras",
+        "name": {
+          "en": "Cameras",
+          "es": "Cámaras"
+        }
+      },
+      {
+        "id": "accessories",
+        "name": {
+          "en": "Accessories",
+          "es": "Accesorios"
+        }
+      }
+    ]
+  },
+  {
+    "id": "confectionery",
+    "name": {
+      "en": "Confectionery",
+      "es": "Confitería"
+    },
+    "icon": "candy",
+    "subcategories": [
+      {
+        "id": "chocolate",
+        "name": {
+          "en": "Chocolate",
+          "es": "Chocolate"
+        }
+      },
+      {
+        "id": "candy",
+        "name": {
+          "en": "Candy",
+          "es": "Dulces"
+        }
+      }
+    ]
+  },
+  {
+    "id": "cosmetics",
+    "name": {
+      "en": "Cosmetics & Skincare",
+      "es": "Cosméticos y Cuidado de la Piel"
+    },
+    "icon": "heart",
+    "subcategories": [
+      {
+        "id": "skincare",
+        "name": {
+          "en": "Skincare",
+          "es": "Cuidado de la Piel"
+        }
+      },
+      {
+        "id": "makeup",
+        "name": {
+          "en": "Makeup",
+          "es": "Maquillaje"
+        }
+      }
+    ]
+  },
+  {
+    "id": "accessories",
+    "name": {
+      "en": "Fashion Accessories",
+      "es": "Accesorios de Moda"
+    },
+    "icon": "bag",
+    "subcategories": [
+      {
+        "id": "sunglasses",
+        "name": {
+          "en": "Sunglasses",
+          "es": "Gafas de Sol"
+        }
+      },
+      {
+        "id": "watches",
+        "name": {
+          "en": "Watches",
+          "es": "Relojes"
+        }
+      }
+    ]
+  }
+]

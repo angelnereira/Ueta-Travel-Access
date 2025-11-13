@@ -1,0 +1,6 @@
+# Allow all robots
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://ueta-travel.example.com/sitemap.xml

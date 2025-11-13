@@ -1,0 +1,339 @@
+[
+  {
+    "id": "prod-001",
+    "slug": "chanel-no-5-eau-de-parfum",
+    "name": {
+      "en": "Chanel No. 5 Eau de Parfum 100ml",
+      "es": "Chanel No. 5 Eau de Parfum 100ml"
+    },
+    "description": {
+      "en": "The legendary fragrance by Chanel. A timeless floral bouquet composed around May Rose and Jasmine.",
+      "es": "La legendaria fragancia de Chanel. Un bouquet floral atemporal compuesto alrededor de Rosa de Mayo y Jazmín."
+    },
+    "price": 125.00,
+    "currency": "USD",
+    "originalPrice": 165.00,
+    "discount": 24,
+    "category": "perfumes",
+    "subCategory": "women",
+    "brand": "Chanel",
+    "image": "/images/products/chanel-no5.jpg",
+    "images": [
+      "/images/products/chanel-no5.jpg",
+      "/images/products/chanel-no5-2.jpg"
+    ],
+    "stock": 15,
+    "terminal": "T1",
+    "featured": true,
+    "rating": 4.9,
+    "reviews": 342
+  },
+  {
+    "id": "prod-002",
+    "slug": "johnnie-walker-blue-label",
+    "name": {
+      "en": "Johnnie Walker Blue Label 750ml",
+      "es": "Johnnie Walker Blue Label 750ml"
+    },
+    "description": {
+      "en": "Premium Scotch whisky with an exquisitely smooth taste and a luxuriously long finish.",
+      "es": "Whisky escocés premium con un sabor exquisitamente suave y un final lujosamente largo."
+    },
+    "price": 189.99,
+    "currency": "USD",
+    "originalPrice": 249.99,
+    "discount": 24,
+    "category": "alcohol",
+    "subCategory": "whisky",
+    "brand": "Johnnie Walker",
+    "image": "/images/products/jw-blue.jpg",
+    "images": [
+      "/images/products/jw-blue.jpg"
+    ],
+    "stock": 8,
+    "terminal": "T2",
+    "featured": true,
+    "rating": 4.8,
+    "reviews": 218
+  },
+  {
+    "id": "prod-003",
+    "slug": "airpods-pro-2nd-gen",
+    "name": {
+      "en": "Apple AirPods Pro (2nd Generation)",
+      "es": "Apple AirPods Pro (2da Generación)"
+    },
+    "description": {
+      "en": "Active Noise Cancellation, Adaptive Audio, and Personalized Spatial Audio with dynamic head tracking.",
+      "es": "Cancelación activa de ruido, Audio Adaptativo y Audio Espacial Personalizado con seguimiento dinámico de cabeza."
+    },
+    "price": 219.00,
+    "currency": "USD",
+    "originalPrice": 249.00,
+    "discount": 12,
+    "category": "electronics",
+    "subCategory": "audio",
+    "brand": "Apple",
+    "image": "/images/products/airpods-pro.jpg",
+    "images": [
+      "/images/products/airpods-pro.jpg"
+    ],
+    "stock": 22,
+    "terminal": "T1",
+    "featured": true,
+    "rating": 4.7,
+    "reviews": 1543
+  },
+  {
+    "id": "prod-004",
+    "slug": "lindt-swiss-luxury-selection",
+    "name": {
+      "en": "Lindt Swiss Luxury Selection 445g",
+      "es": "Lindt Selección de Lujo Suiza 445g"
+    },
+    "description": {
+      "en": "Assorted premium Swiss chocolates with milk, dark, and white chocolate varieties.",
+      "es": "Chocolates suizos premium surtidos con variedades de chocolate con leche, oscuro y blanco."
+    },
+    "price": 24.99,
+    "currency": "USD",
+    "originalPrice": 32.99,
+    "discount": 24,
+    "category": "confectionery",
+    "subCategory": "chocolate",
+    "brand": "Lindt",
+    "image": "/images/products/lindt-luxury.jpg",
+    "images": [
+      "/images/products/lindt-luxury.jpg"
+    ],
+    "stock": 45,
+    "terminal": "T1",
+    "featured": false,
+    "rating": 4.9,
+    "reviews": 892
+  },
+  {
+    "id": "prod-005",
+    "slug": "dior-sauvage-eau-de-toilette",
+    "name": {
+      "en": "Dior Sauvage Eau de Toilette 100ml",
+      "es": "Dior Sauvage Eau de Toilette 100ml"
+    },
+    "description": {
+      "en": "A fragrance inspired by wide-open spaces with notes of bergamot and pepper.",
+      "es": "Una fragancia inspirada en espacios abiertos con notas de bergamota y pimienta."
+    },
+    "price": 98.00,
+    "currency": "USD",
+    "originalPrice": 128.00,
+    "discount": 23,
+    "category": "perfumes",
+    "subCategory": "men",
+    "brand": "Dior",
+    "image": "/images/products/dior-sauvage.jpg",
+    "images": [
+      "/images/products/dior-sauvage.jpg"
+    ],
+    "stock": 18,
+    "terminal": "T2",
+    "featured": true,
+    "rating": 4.8,
+    "reviews": 621
+  },
+  {
+    "id": "prod-006",
+    "slug": "moet-chandon-imperial-brut",
+    "name": {
+      "en": "Moët & Chandon Impérial Brut 750ml",
+      "es": "Moët & Chandon Impérial Brut 750ml"
+    },
+    "description": {
+      "en": "The iconic Champagne with bright fruitiness, seductive palate and elegant maturity.",
+      "es": "El icónico Champagne con frutosidad brillante, paladar seductor y elegante madurez."
+    },
+    "price": 52.99,
+    "currency": "USD",
+    "originalPrice": 69.99,
+    "discount": 24,
+    "category": "alcohol",
+    "subCategory": "champagne",
+    "brand": "Moët & Chandon",
+    "image": "/images/products/moet-chandon.jpg",
+    "images": [
+      "/images/products/moet-chandon.jpg"
+    ],
+    "stock": 12,
+    "terminal": "T1",
+    "featured": false,
+    "rating": 4.7,
+    "reviews": 445
+  },
+  {
+    "id": "prod-007",
+    "slug": "ray-ban-aviator-classic",
+    "name": {
+      "en": "Ray-Ban Aviator Classic Sunglasses",
+      "es": "Ray-Ban Gafas de Sol Aviador Clásicas"
+    },
+    "description": {
+      "en": "Iconic teardrop shape with crystal lenses and gold frame. UV protection included.",
+      "es": "Forma icónica de lágrima con lentes de cristal y montura dorada. Protección UV incluida."
+    },
+    "price": 145.00,
+    "currency": "USD",
+    "originalPrice": 175.00,
+    "discount": 17,
+    "category": "accessories",
+    "subCategory": "sunglasses",
+    "brand": "Ray-Ban",
+    "image": "/images/products/rayban-aviator.jpg",
+    "images": [
+      "/images/products/rayban-aviator.jpg"
+    ],
+    "stock": 30,
+    "terminal": "T2",
+    "featured": false,
+    "rating": 4.8,
+    "reviews": 1234
+  },
+  {
+    "id": "prod-008",
+    "slug": "estee-lauder-advanced-night-repair",
+    "name": {
+      "en": "Estée Lauder Advanced Night Repair Serum 50ml",
+      "es": "Estée Lauder Suero Reparación Nocturna Avanzada 50ml"
+    },
+    "description": {
+      "en": "Powerful anti-aging serum that reduces the look of multiple signs of aging.",
+      "es": "Potente suero anti-envejecimiento que reduce la apariencia de múltiples signos de envejecimiento."
+    },
+    "price": 89.00,
+    "currency": "USD",
+    "originalPrice": 115.00,
+    "discount": 23,
+    "category": "cosmetics",
+    "subCategory": "skincare",
+    "brand": "Estée Lauder",
+    "image": "/images/products/estee-lauder-serum.jpg",
+    "images": [
+      "/images/products/estee-lauder-serum.jpg"
+    ],
+    "stock": 25,
+    "terminal": "T1",
+    "featured": false,
+    "rating": 4.9,
+    "reviews": 3421
+  },
+  {
+    "id": "prod-009",
+    "slug": "toblerone-swiss-chocolate-4-5kg",
+    "name": {
+      "en": "Toblerone Swiss Milk Chocolate 4.5kg",
+      "es": "Toblerone Chocolate Suizo con Leche 4.5kg"
+    },
+    "description": {
+      "en": "Giant Toblerone bar with Swiss milk chocolate, honey, and almond nougat.",
+      "es": "Barra gigante de Toblerone con chocolate suizo con leche, miel y turrón de almendra."
+    },
+    "price": 89.99,
+    "currency": "USD",
+    "originalPrice": 110.00,
+    "discount": 18,
+    "category": "confectionery",
+    "subCategory": "chocolate",
+    "brand": "Toblerone",
+    "image": "/images/products/toblerone-giant.jpg",
+    "images": [
+      "/images/products/toblerone-giant.jpg"
+    ],
+    "stock": 6,
+    "terminal": "T2",
+    "featured": true,
+    "rating": 4.6,
+    "reviews": 156
+  },
+  {
+    "id": "prod-010",
+    "slug": "bose-quietcomfort-45",
+    "name": {
+      "en": "Bose QuietComfort 45 Headphones",
+      "es": "Bose QuietComfort 45 Audífonos"
+    },
+    "description": {
+      "en": "Wireless noise cancelling headphones with 24-hour battery life and premium sound.",
+      "es": "Audífonos inalámbricos con cancelación de ruido, batería de 24 horas y sonido premium."
+    },
+    "price": 279.00,
+    "currency": "USD",
+    "originalPrice": 329.00,
+    "discount": 15,
+    "category": "electronics",
+    "subCategory": "audio",
+    "brand": "Bose",
+    "image": "/images/products/bose-qc45.jpg",
+    "images": [
+      "/images/products/bose-qc45.jpg"
+    ],
+    "stock": 14,
+    "terminal": "T1",
+    "featured": false,
+    "rating": 4.8,
+    "reviews": 987
+  },
+  {
+    "id": "prod-011",
+    "slug": "hennessy-vs-cognac",
+    "name": {
+      "en": "Hennessy V.S Cognac 700ml",
+      "es": "Hennessy V.S Cognac 700ml"
+    },
+    "description": {
+      "en": "Bold and fragrant blend aged in French oak barrels with notes of vanilla and oak.",
+      "es": "Mezcla audaz y fragante envejecida en barricas de roble francés con notas de vainilla y roble."
+    },
+    "price": 54.99,
+    "currency": "USD",
+    "originalPrice": 69.99,
+    "discount": 21,
+    "category": "alcohol",
+    "subCategory": "cognac",
+    "brand": "Hennessy",
+    "image": "/images/products/hennessy-vs.jpg",
+    "images": [
+      "/images/products/hennessy-vs.jpg"
+    ],
+    "stock": 20,
+    "terminal": "T2",
+    "featured": false,
+    "rating": 4.7,
+    "reviews": 312
+  },
+  {
+    "id": "prod-012",
+    "slug": "versace-bright-crystal",
+    "name": {
+      "en": "Versace Bright Crystal Eau de Toilette 90ml",
+      "es": "Versace Bright Crystal Eau de Toilette 90ml"
+    },
+    "description": {
+      "en": "Luminous fragrance with pomegranate, peony, and magnolia notes for modern women.",
+      "es": "Fragancia luminosa con notas de granada, peonía y magnolia para mujeres modernas."
+    },
+    "price": 72.00,
+    "currency": "USD",
+    "originalPrice": 95.00,
+    "discount": 24,
+    "category": "perfumes",
+    "subCategory": "women",
+    "brand": "Versace",
+    "image": "/images/products/versace-bright.jpg",
+    "images": [
+      "/images/products/versace-bright.jpg"
+    ],
+    "stock": 16,
+    "terminal": "T1",
+    "featured": false,
+    "rating": 4.6,
+    "reviews": 534
+  }
+]
