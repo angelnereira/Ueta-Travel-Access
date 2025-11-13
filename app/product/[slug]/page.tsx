@@ -5,11 +5,14 @@ import { useParams, useRouter } from 'next/navigation';
 import { useLanguageStore } from '@/lib/stores/language-store';
 import { useCartStore } from '@/lib/stores/cart-store';
 import { useFavoritesStore } from '@/lib/stores/favorites-store';
+import { useViewedProductsStore } from '@/lib/stores/viewed-products-store';
 import { t, tr, getLocalizedText } from '@/lib/i18n';
-import { getProductBySlug } from '@/lib/api';
-import type { Product } from '@/types';
+import { getProductBySlug, getReviewsByProduct, getReviewStats, getProductsByCategory } from '@/lib/api';
+import type { Product, Review } from '@/types';
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
+import ReviewSection from '@/components/ui/ReviewSection';
+import ProductCard from '@/components/ui/ProductCard';
 
 export default function ProductDetailPage() {
   const params = useParams();
@@ -17,10 +20,14 @@ export default function ProductDetailPage() {
   const { language } = useLanguageStore();
   const { addItem } = useCartStore();
   const { addFavorite, removeFavorite, isFavorite } = useFavoritesStore();
+  const { addViewedProduct } = useViewedProductsStore();
 
   const [product, setProduct] = useState<Product | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [reviewStats, setReviewStats] = useState<any>(null);
+  const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
 
   const slug = params?.slug as string;
 
@@ -29,6 +36,23 @@ export default function ProductDetailPage() {
       try {
         const data = await getProductBySlug(slug);
         setProduct(data);
+
+        if (data) {
+          // Add to viewed products
+          addViewedProduct(data);
+
+          // Load reviews and related products
+          const [reviewsData, statsData, relatedData] = await Promise.all([
+            getReviewsByProduct(data.id),
+            getReviewStats(data.id),
+            getProductsByCategory(data.category),
+          ]);
+
+          setReviews(reviewsData);
+          setReviewStats(statsData);
+          // Filter out current product and limit to 4
+          setRelatedProducts(relatedData.filter(p => p.id !== data.id).slice(0, 4));
+        }
       } catch (error) {
         console.error('Error loading product:', error);
       } finally {
@@ -36,7 +60,7 @@ export default function ProductDetailPage() {
       }
     }
     loadProduct();
-  }, [slug]);
+  }, [slug, addViewedProduct]);
 
   if (loading) {
     return (
@@ -277,6 +301,31 @@ export default function ProductDetailPage() {
           </div>
         </div>
       </div>
+
+      {/* Reviews Section */}
+      {reviews.length > 0 && reviewStats && (
+        <div className="mt-12">
+          <ReviewSection
+            reviews={reviews}
+            averageRating={reviewStats.averageRating}
+            ratingDistribution={reviewStats.ratingDistribution}
+          />
+        </div>
+      )}
+
+      {/* Related Products */}
+      {relatedProducts.length > 0 && (
+        <div className="mt-12">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+            {t('related.title', language)}
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {relatedProducts.map((relatedProduct) => (
+              <ProductCard key={relatedProduct.id} product={relatedProduct} />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

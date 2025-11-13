@@ -107,6 +107,64 @@ export const translations = {
     'flight.gate': 'Gate',
     'flight.seat': 'Seat',
     'flight.class': 'Class',
+
+    // Reviews
+    'reviews.title': 'Customer Reviews',
+    'reviews.write': 'Write a Review',
+    'reviews.verified': 'Verified Purchase',
+    'reviews.helpful': 'Helpful',
+    'reviews.rating_distribution': 'Rating Distribution',
+    'reviews.average_rating': 'Average Rating',
+    'reviews.total': '{count} reviews',
+    'reviews.sort_recent': 'Most Recent',
+    'reviews.sort_helpful': 'Most Helpful',
+    'reviews.sort_highest': 'Highest Rating',
+
+    // Coupons
+    'coupon.title': 'Apply Coupon',
+    'coupon.code': 'Coupon Code',
+    'coupon.apply': 'Apply',
+    'coupon.remove': 'Remove',
+    'coupon.applied': 'Coupon Applied!',
+    'coupon.invalid': 'Invalid coupon code',
+    'coupon.expired': 'Coupon expired',
+    'coupon.min_purchase': 'Min. purchase ${amount}',
+    'coupon.available': 'Available Coupons',
+    'coupon.save': 'Save ${amount}',
+    'coupon.discount': 'Discount',
+
+    // Wishlist
+    'wishlist.title': 'My Wishlist',
+    'wishlist.empty': 'Your wishlist is empty',
+    'wishlist.add': 'Add to Wishlist',
+    'wishlist.remove': 'Remove from Wishlist',
+    'wishlist.added': 'Added to wishlist',
+    'wishlist.removed': 'Removed from wishlist',
+    'wishlist.items': '{count} items',
+
+    // Recently Viewed
+    'recent.title': 'Recently Viewed',
+    'recent.empty': 'No recently viewed products',
+    'recent.clear': 'Clear History',
+
+    // Promotions
+    'promo.flash_sale': 'Flash Sale',
+    'promo.limited_time': 'Limited Time Offer',
+    'promo.expires_in': 'Expires in {time}',
+    'promo.shop_now': 'Shop Now',
+
+    // Terminal Info
+    'terminal.info': 'Terminal Information',
+    'terminal.stores': 'Stores',
+    'terminal.hours': 'Hours',
+    'terminal.location': 'Location',
+    'terminal.features': 'Features',
+    'terminal.pickup_time': 'Pickup Time',
+
+    // Related Products
+    'related.title': 'You May Also Like',
+    'related.similar': 'Similar Products',
+    'related.bought_together': 'Frequently Bought Together',
   },
   es: {
     // Navigation
@@ -208,6 +266,64 @@ export const translations = {
     'flight.gate': 'Puerta',
     'flight.seat': 'Asiento',
     'flight.class': 'Clase',
+
+    // Reviews
+    'reviews.title': 'Reseñas de Clientes',
+    'reviews.write': 'Escribir Reseña',
+    'reviews.verified': 'Compra Verificada',
+    'reviews.helpful': 'Útil',
+    'reviews.rating_distribution': 'Distribución de Calificaciones',
+    'reviews.average_rating': 'Calificación Promedio',
+    'reviews.total': '{count} reseñas',
+    'reviews.sort_recent': 'Más Recientes',
+    'reviews.sort_helpful': 'Más Útiles',
+    'reviews.sort_highest': 'Mejor Calificadas',
+
+    // Coupons
+    'coupon.title': 'Aplicar Cupón',
+    'coupon.code': 'Código de Cupón',
+    'coupon.apply': 'Aplicar',
+    'coupon.remove': 'Eliminar',
+    'coupon.applied': '¡Cupón Aplicado!',
+    'coupon.invalid': 'Código de cupón inválido',
+    'coupon.expired': 'Cupón expirado',
+    'coupon.min_purchase': 'Compra mín. ${amount}',
+    'coupon.available': 'Cupones Disponibles',
+    'coupon.save': 'Ahorra ${amount}',
+    'coupon.discount': 'Descuento',
+
+    // Wishlist
+    'wishlist.title': 'Mi Lista de Deseos',
+    'wishlist.empty': 'Tu lista de deseos está vacía',
+    'wishlist.add': 'Añadir a Lista de Deseos',
+    'wishlist.remove': 'Quitar de Lista de Deseos',
+    'wishlist.added': 'Añadido a lista de deseos',
+    'wishlist.removed': 'Quitado de lista de deseos',
+    'wishlist.items': '{count} artículos',
+
+    // Recently Viewed
+    'recent.title': 'Vistos Recientemente',
+    'recent.empty': 'No hay productos vistos recientemente',
+    'recent.clear': 'Limpiar Historial',
+
+    // Promotions
+    'promo.flash_sale': 'Venta Flash',
+    'promo.limited_time': 'Oferta por Tiempo Limitado',
+    'promo.expires_in': 'Expira en {time}',
+    'promo.shop_now': 'Comprar Ahora',
+
+    // Terminal Info
+    'terminal.info': 'Información del Terminal',
+    'terminal.stores': 'Tiendas',
+    'terminal.hours': 'Horario',
+    'terminal.location': 'Ubicación',
+    'terminal.features': 'Características',
+    'terminal.pickup_time': 'Tiempo de Recogida',
+
+    // Related Products
+    'related.title': 'También Te Puede Gustar',
+    'related.similar': 'Productos Similares',
+    'related.bought_together': 'Comprados Frecuentemente Juntos',
   },
 };
 

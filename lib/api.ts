@@ -11,7 +11,11 @@
 import productsData from '@/data/products.json';
 import userData from '@/data/user.json';
 import categoriesData from '@/data/categories.json';
-import type { Product, User, Category } from '@/types';
+import reviewsData from '@/data/reviews.json';
+import couponsData from '@/data/coupons.json';
+import terminalsData from '@/data/terminals.json';
+import promotionsData from '@/data/promotions.json';
+import type { Product, User, Category, Review, Coupon, Terminal, Promotion } from '@/types';
 
 // Simulate network delay for realistic behavior
 const simulateDelay = (ms: number = 300) =>
@@ -104,6 +108,141 @@ export async function updateUserPreferences(
       ...preferences,
     },
   } as User;
+}
+
+// ============ Reviews API ============
+
+export async function getReviews(): Promise<Review[]> {
+  await simulateDelay();
+  return reviewsData as Review[];
+}
+
+export async function getReviewsByProduct(productId: string): Promise<Review[]> {
+  await simulateDelay();
+  const reviews = reviewsData as Review[];
+  return reviews.filter((r) => r.productId === productId);
+}
+
+export async function getReviewStats(productId: string): Promise<{
+  averageRating: number;
+  totalReviews: number;
+  ratingDistribution: { [key: number]: number };
+}> {
+  await simulateDelay();
+  const reviews = (reviewsData as Review[]).filter((r) => r.productId === productId);
+
+  const totalReviews = reviews.length;
+  const averageRating = totalReviews > 0
+    ? reviews.reduce((sum, r) => sum + r.rating, 0) / totalReviews
+    : 0;
+
+  const ratingDistribution: { [key: number]: number } = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+  reviews.forEach((r) => {
+    ratingDistribution[r.rating]++;
+  });
+
+  return { averageRating, totalReviews, ratingDistribution };
+}
+
+// ============ Coupons API ============
+
+export async function getCoupons(): Promise<Coupon[]> {
+  await simulateDelay();
+  return (couponsData as Coupon[]).filter((c) => c.active);
+}
+
+export async function validateCoupon(
+  code: string,
+  cartTotal: number,
+  categories: string[],
+  userTier?: string
+): Promise<{ valid: boolean; coupon?: Coupon; message?: string }> {
+  await simulateDelay();
+  const coupons = couponsData as Coupon[];
+  const coupon = coupons.find((c) => c.code === code && c.active);
+
+  if (!coupon) {
+    return { valid: false, message: 'Invalid coupon code' };
+  }
+
+  if (new Date(coupon.expiryDate) < new Date()) {
+    return { valid: false, message: 'Coupon has expired' };
+  }
+
+  if (cartTotal < coupon.minPurchase) {
+    return {
+      valid: false,
+      message: `Minimum purchase of $${coupon.minPurchase} required`,
+    };
+  }
+
+  if (coupon.loyaltyTierRequired && coupon.loyaltyTierRequired !== userTier) {
+    return {
+      valid: false,
+      message: `This coupon is only for ${coupon.loyaltyTierRequired} members`,
+    };
+  }
+
+  if (coupon.categories.length > 0) {
+    const hasValidCategory = categories.some((cat) => coupon.categories.includes(cat));
+    if (!hasValidCategory) {
+      return {
+        valid: false,
+        message: 'Coupon not valid for items in your cart',
+      };
+    }
+  }
+
+  return { valid: true, coupon };
+}
+
+export async function calculateDiscount(
+  coupon: Coupon,
+  cartTotal: number
+): Promise<number> {
+  await simulateDelay();
+
+  if (coupon.type === 'percentage') {
+    const discount = (cartTotal * coupon.value) / 100;
+    return Math.min(discount, coupon.maxDiscount);
+  } else if (coupon.type === 'fixed') {
+    return Math.min(coupon.value, coupon.maxDiscount);
+  } else if (coupon.type === 'shipping') {
+    return coupon.maxDiscount; // Free shipping amount
+  }
+
+  return 0;
+}
+
+// ============ Terminals API ============
+
+export async function getTerminals(): Promise<Terminal[]> {
+  await simulateDelay();
+  return terminalsData as Terminal[];
+}
+
+export async function getTerminalByCode(code: string): Promise<Terminal | null> {
+  await simulateDelay();
+  const terminals = terminalsData as Terminal[];
+  return terminals.find((t) => t.code === code) || null;
+}
+
+// ============ Promotions API ============
+
+export async function getPromotions(): Promise<Promotion[]> {
+  await simulateDelay();
+  const promotions = promotionsData as Promotion[];
+  const now = new Date();
+
+  return promotions
+    .filter((p) => p.active && new Date(p.startDate) <= now && new Date(p.endDate) >= now)
+    .sort((a, b) => a.priority - b.priority);
+}
+
+export async function getActiveFlashSales(): Promise<Promotion[]> {
+  await simulateDelay();
+  const promotions = await getPromotions();
+  return promotions.filter((p) => p.type === 'flash');
 }
 
 // ============ Future Oracle Integration Points ============

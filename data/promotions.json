@@ -1,0 +1,63 @@
+[
+  {
+    "id": "promo-001",
+    "type": "banner",
+    "title": {
+      "en": "Black Friday Deals",
+      "es": "Ofertas de Black Friday"
+    },
+    "subtitle": {
+      "en": "Up to 40% off on selected items",
+      "es": "Hasta 40% de descuento en artículos seleccionados"
+    },
+    "image": "/images/banners/black-friday.jpg",
+    "cta": {
+      "en": "Shop Now",
+      "es": "Comprar Ahora"
+    },
+    "link": "/shop?promo=black-friday",
+    "active": true,
+    "priority": 1,
+    "startDate": "2025-11-10T00:00:00Z",
+    "endDate": "2025-11-30T23:59:59Z"
+  },
+  {
+    "id": "promo-002",
+    "type": "banner",
+    "title": {
+      "en": "New Arrivals",
+      "es": "Nuevos Productos"
+    },
+    "subtitle": {
+      "en": "Discover the latest luxury brands",
+      "es": "Descubre las últimas marcas de lujo"
+    },
+    "image": "/images/banners/new-arrivals.jpg",
+    "cta": {
+      "en": "Explore",
+      "es": "Explorar"
+    },
+    "link": "/shop?sort=newest",
+    "active": true,
+    "priority": 2,
+    "startDate": "2025-11-01T00:00:00Z",
+    "endDate": "2025-12-31T23:59:59Z"
+  },
+  {
+    "id": "promo-003",
+    "type": "flash",
+    "title": {
+      "en": "⚡ Flash Sale",
+      "es": "⚡ Venta Relámpago"
+    },
+    "subtitle": {
+      "en": "24 hours only! Extra 25% off electronics",
+      "es": "¡Solo 24 horas! 25% extra en electrónica"
+    },
+    "couponCode": "FLASH25",
+    "active": true,
+    "priority": 3,
+    "startDate": "2025-11-13T00:00:00Z",
+    "endDate": "2025-11-14T23:59:59Z"
+  }
+]

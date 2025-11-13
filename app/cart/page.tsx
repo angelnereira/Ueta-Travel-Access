@@ -1,29 +1,70 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useLanguageStore } from '@/lib/stores/language-store';
 import { useCartStore } from '@/lib/stores/cart-store';
 import { useOrderStore } from '@/lib/stores/order-store';
+import { useCouponStore } from '@/lib/stores/coupon-store';
+import { getCurrentUser } from '@/lib/api';
+import { calculateDiscount } from '@/lib/api';
 import { t, tr, getLocalizedText } from '@/lib/i18n';
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import Tooltip from '@/components/ui/Tooltip';
+import CouponInput from '@/components/ui/CouponInput';
 
 export default function CartPage() {
   const router = useRouter();
   const { language } = useLanguageStore();
   const { items, removeItem, updateQuantity, getTotalPrice, clearCart } = useCartStore();
   const { createOrder } = useOrderStore();
+  const { appliedCoupon, markCouponAsUsed } = useCouponStore();
+
+  const [discount, setDiscount] = useState(0);
+  const [userTier, setUserTier] = useState<string>();
 
   const total = getTotalPrice();
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
+  const categories = Array.from(new Set(items.map((item) => item.product.category)));
+
+  useEffect(() => {
+    async function loadUser() {
+      try {
+        const user = await getCurrentUser();
+        setUserTier(user.loyaltyTier);
+      } catch (error) {
+        console.error('Error loading user:', error);
+      }
+    }
+    loadUser();
+  }, []);
+
+  useEffect(() => {
+    async function calcDiscount() {
+      if (appliedCoupon) {
+        const discountAmount = await calculateDiscount(appliedCoupon, total);
+        setDiscount(discountAmount);
+      } else {
+        setDiscount(0);
+      }
+    }
+    calcDiscount();
+  }, [appliedCoupon, total]);
 
   const handleCheckout = () => {
     if (items.length === 0) return;
 
+    const finalTotal = total - discount + total * 0.1; // Subtract discount, add tax
+
     // Create order with QR code
-    const order = createOrder(items, total);
+    const order = createOrder(items, finalTotal);
+
+    // Mark coupon as used
+    if (appliedCoupon) {
+      markCouponAsUsed(appliedCoupon.code);
+    }
 
     // Clear cart
     clearCart();
@@ -171,20 +212,38 @@ export default function CartPage() {
                 <span>{t('cart.subtotal', language)}</span>
                 <span>${total.toFixed(2)}</span>
               </div>
+
+              {discount > 0 && (
+                <div className="flex justify-between text-green-600 dark:text-green-400">
+                  <span>{t('coupon.discount', language)}</span>
+                  <span>-${discount.toFixed(2)}</span>
+                </div>
+              )}
+
               <div className="flex justify-between text-gray-600 dark:text-gray-400">
-                <span>Tax</span>
-                <span>${(total * 0.1).toFixed(2)}</span>
+                <span>Tax (10%)</span>
+                <span>${((total - discount) * 0.1).toFixed(2)}</span>
               </div>
+
               <div className="border-t border-gray-200 dark:border-gray-700 pt-3">
                 <div className="flex justify-between">
                   <span className="text-lg font-bold text-gray-900 dark:text-white">
                     {t('cart.total', language)}
                   </span>
                   <span className="text-lg font-bold text-gray-900 dark:text-white">
-                    ${(total * 1.1).toFixed(2)}
+                    ${((total - discount) * 1.1).toFixed(2)}
                   </span>
                 </div>
               </div>
+            </div>
+
+            {/* Coupon Input */}
+            <div className="mb-6">
+              <CouponInput
+                cartTotal={total}
+                categories={categories}
+                userTier={userTier}
+              />
             </div>
 
             <Tooltip text={t('tooltip.pickup', language)}>

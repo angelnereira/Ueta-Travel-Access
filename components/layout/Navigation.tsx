@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useCartStore } from '@/lib/stores/cart-store';
+import { useFavoritesStore } from '@/lib/stores/favorites-store';
 import { useLanguageStore } from '@/lib/stores/language-store';
 import { t } from '@/lib/i18n';
 import Tooltip from '@/components/ui/Tooltip';
@@ -12,8 +13,10 @@ import LanguageToggle from '@/components/ui/LanguageToggle';
 export default function Navigation() {
   const pathname = usePathname();
   const { getTotalItems } = useCartStore();
+  const { favorites } = useFavoritesStore();
   const { language } = useLanguageStore();
   const cartItemCount = getTotalItems();
+  const favoritesCount = favorites.length;
 
   const navItems = [
     {
@@ -101,6 +104,32 @@ export default function Navigation() {
 
           {/* Right side controls */}
           <div className="flex items-center space-x-2">
+            <Tooltip text={t('tooltip.favorites', language)}>
+              <Link
+                href="/wishlist"
+                className="relative p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                aria-label="Wishlist"
+              >
+                <svg
+                  className="w-5 h-5 text-gray-700 dark:text-gray-300"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                  />
+                </svg>
+                {favoritesCount > 0 && (
+                  <span className="absolute -top-1 -right-1 flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-ueta-red rounded-full">
+                    {favoritesCount}
+                  </span>
+                )}
+              </Link>
+            </Tooltip>
             <Tooltip text={t('tooltip.scan', language)}>
               <button
                 className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"

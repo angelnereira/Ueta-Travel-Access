@@ -4,30 +4,35 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useLanguageStore } from '@/lib/stores/language-store';
 import { t, getLocalizedText } from '@/lib/i18n';
-import { getFeaturedProducts, getCurrentUser, getCategories } from '@/lib/api';
-import type { Product, User, Category } from '@/types';
+import { getFeaturedProducts, getCurrentUser, getCategories, getPromotions } from '@/lib/api';
+import type { Product, User, Category, Promotion } from '@/types';
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import ProductCard from '@/components/ui/ProductCard';
+import PromotionBanner from '@/components/ui/PromotionBanner';
+import RecentlyViewed from '@/components/ui/RecentlyViewed';
 
 export default function HomePage() {
   const { language } = useLanguageStore();
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
   const [user, setUser] = useState<User | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
+  const [promotions, setPromotions] = useState<Promotion[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadData() {
       try {
-        const [productsData, userData, categoriesData] = await Promise.all([
+        const [productsData, userData, categoriesData, promotionsData] = await Promise.all([
           getFeaturedProducts(),
           getCurrentUser(),
           getCategories(),
+          getPromotions(),
         ]);
         setFeaturedProducts(productsData);
         setUser(userData);
         setCategories(categoriesData);
+        setPromotions(promotionsData);
       } catch (error) {
         console.error('Error loading data:', error);
       } finally {
@@ -97,6 +102,17 @@ export default function HomePage() {
         </Card>
       )}
 
+      {/* Promotions Section */}
+      {promotions.length > 0 && (
+        <section className="mb-8">
+          <div className="space-y-4">
+            {promotions.slice(0, 2).map((promo) => (
+              <PromotionBanner key={promo.id} promotion={promo} />
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* Categories Section */}
       <section className="mb-12">
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
@@ -151,6 +167,9 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+
+      {/* Recently Viewed Products */}
+      <RecentlyViewed />
 
       {/* Loyalty Section */}
       {user && (

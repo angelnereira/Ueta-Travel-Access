@@ -119,3 +119,70 @@ export type Language = 'en' | 'es';
 
 // Theme Type
 export type Theme = 'light' | 'dark';
+
+// Review Types
+export interface Review {
+  id: string;
+  productId: string;
+  userId: string;
+  userName: string;
+  rating: number;
+  title: LocalizedText;
+  comment: LocalizedText;
+  date: string;
+  verified: boolean;
+  helpful: number;
+}
+
+// Coupon Types
+export interface Coupon {
+  id: string;
+  code: string;
+  type: 'percentage' | 'fixed' | 'shipping';
+  value: number;
+  description: LocalizedText;
+  minPurchase: number;
+  maxDiscount: number;
+  active: boolean;
+  expiryDate: string;
+  usageLimit: number;
+  categories: string[];
+  loyaltyTierRequired?: 'bronze' | 'silver' | 'gold' | 'platinum';
+}
+
+// Terminal Types
+export interface TerminalStore {
+  name: string;
+  location: string;
+  hours: string;
+  categories: string[];
+}
+
+export interface Terminal {
+  id: string;
+  code: string;
+  name: LocalizedText;
+  airport: string;
+  stores: TerminalStore[];
+  features: {
+    en: string[];
+    es: string[];
+  };
+  pickupTime: LocalizedText;
+}
+
+// Promotion Types
+export interface Promotion {
+  id: string;
+  type: 'banner' | 'flash' | 'deal';
+  title: LocalizedText;
+  subtitle: LocalizedText;
+  image?: string;
+  cta?: LocalizedText;
+  link?: string;
+  couponCode?: string;
+  active: boolean;
+  priority: number;
+  startDate: string;
+  endDate: string;
+}

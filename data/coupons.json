@@ -1,0 +1,83 @@
+[
+  {
+    "id": "coupon-001",
+    "code": "WELCOME10",
+    "type": "percentage",
+    "value": 10,
+    "description": {
+      "en": "Welcome! Get 10% off your first purchase",
+      "es": "¡Bienvenido! Obtén 10% de descuento en tu primera compra"
+    },
+    "minPurchase": 50,
+    "maxDiscount": 50,
+    "active": true,
+    "expiryDate": "2025-12-31T23:59:59Z",
+    "usageLimit": 1,
+    "categories": []
+  },
+  {
+    "id": "coupon-002",
+    "code": "PERFUME20",
+    "type": "percentage",
+    "value": 20,
+    "description": {
+      "en": "Extra 20% off on all perfumes",
+      "es": "20% extra de descuento en todos los perfumes"
+    },
+    "minPurchase": 75,
+    "maxDiscount": 100,
+    "active": true,
+    "expiryDate": "2025-11-30T23:59:59Z",
+    "usageLimit": 1,
+    "categories": ["perfumes"]
+  },
+  {
+    "id": "coupon-003",
+    "code": "FREESHIP",
+    "type": "shipping",
+    "value": 0,
+    "description": {
+      "en": "Free express pickup at terminal",
+      "es": "Recogida express gratis en terminal"
+    },
+    "minPurchase": 100,
+    "maxDiscount": 15,
+    "active": true,
+    "expiryDate": "2025-12-15T23:59:59Z",
+    "usageLimit": 1,
+    "categories": []
+  },
+  {
+    "id": "coupon-004",
+    "code": "GOLD25",
+    "type": "percentage",
+    "value": 25,
+    "description": {
+      "en": "Gold member exclusive: 25% off",
+      "es": "Exclusivo miembro Gold: 25% de descuento"
+    },
+    "minPurchase": 200,
+    "maxDiscount": 150,
+    "active": true,
+    "expiryDate": "2026-01-31T23:59:59Z",
+    "usageLimit": 1,
+    "categories": [],
+    "loyaltyTierRequired": "gold"
+  },
+  {
+    "id": "coupon-005",
+    "code": "FLASH50",
+    "type": "fixed",
+    "value": 50,
+    "description": {
+      "en": "Flash Sale! $50 off purchases over $250",
+      "es": "¡Venta Flash! $50 de descuento en compras sobre $250"
+    },
+    "minPurchase": 250,
+    "maxDiscount": 50,
+    "active": true,
+    "expiryDate": "2025-11-20T23:59:59Z",
+    "usageLimit": 1,
+    "categories": []
+  }
+]

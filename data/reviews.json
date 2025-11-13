@@ -1,0 +1,92 @@
+[
+  {
+    "id": "review-001",
+    "productId": "prod-001",
+    "userId": "user-001",
+    "userName": "María González",
+    "rating": 5,
+    "title": {
+      "en": "Absolutely Perfect!",
+      "es": "¡Absolutamente Perfecto!"
+    },
+    "comment": {
+      "en": "My favorite perfume at an incredible price. The duty-free savings are amazing!",
+      "es": "Mi perfume favorito a un precio increíble. ¡Los ahorros del duty-free son increíbles!"
+    },
+    "date": "2025-11-05T10:30:00Z",
+    "verified": true,
+    "helpful": 42
+  },
+  {
+    "id": "review-002",
+    "productId": "prod-001",
+    "userId": "user-002",
+    "userName": "John Smith",
+    "rating": 5,
+    "title": {
+      "en": "Classic Elegance",
+      "es": "Elegancia Clásica"
+    },
+    "comment": {
+      "en": "A timeless fragrance. Great gift for my wife. Packaging was perfect.",
+      "es": "Una fragancia atemporal. Gran regalo para mi esposa. El empaque estaba perfecto."
+    },
+    "date": "2025-10-28T14:20:00Z",
+    "verified": true,
+    "helpful": 28
+  },
+  {
+    "id": "review-003",
+    "productId": "prod-002",
+    "userId": "user-003",
+    "userName": "David Chen",
+    "rating": 5,
+    "title": {
+      "en": "Best Whisky Ever",
+      "es": "El Mejor Whisky"
+    },
+    "comment": {
+      "en": "Smooth, rich, and worth every penny. The Blue Label never disappoints.",
+      "es": "Suave, rico y vale cada centavo. El Blue Label nunca decepciona."
+    },
+    "date": "2025-11-01T16:45:00Z",
+    "verified": true,
+    "helpful": 35
+  },
+  {
+    "id": "review-004",
+    "productId": "prod-003",
+    "userId": "user-004",
+    "userName": "Sarah Johnson",
+    "rating": 5,
+    "title": {
+      "en": "Perfect for Traveling",
+      "es": "Perfecto para Viajar"
+    },
+    "comment": {
+      "en": "Amazing noise cancellation. Perfect for long flights. Battery life is excellent!",
+      "es": "Cancelación de ruido increíble. Perfecto para vuelos largos. ¡La batería es excelente!"
+    },
+    "date": "2025-10-25T09:15:00Z",
+    "verified": true,
+    "helpful": 56
+  },
+  {
+    "id": "review-005",
+    "productId": "prod-003",
+    "userId": "user-005",
+    "userName": "Michael Brown",
+    "rating": 4,
+    "title": {
+      "en": "Great Sound Quality",
+      "es": "Gran Calidad de Sonido"
+    },
+    "comment": {
+      "en": "Very good ANC and sound. Case could be smaller but overall excellent product.",
+      "es": "Muy buen ANC y sonido. El estuche podría ser más pequeño pero en general excelente producto."
+    },
+    "date": "2025-10-30T11:30:00Z",
+    "verified": true,
+    "helpful": 21
+  }
+]

@@ -1,0 +1,64 @@
+[
+  {
+    "id": "terminal-t1",
+    "code": "T1",
+    "name": {
+      "en": "Terminal 1 - Premium Lounge",
+      "es": "Terminal 1 - Sala Premium"
+    },
+    "airport": "JFK",
+    "stores": [
+      {
+        "name": "Ueta Travel Duty Free",
+        "location": "Gate A12, Ground Floor",
+        "hours": "05:00 - 23:00",
+        "categories": ["perfumes", "alcohol", "electronics", "confectionery"]
+      },
+      {
+        "name": "Ueta Travel Express",
+        "location": "Gate A20, Departure Hall",
+        "hours": "06:00 - 22:00",
+        "categories": ["confectionery", "accessories"]
+      }
+    ],
+    "features": {
+      "en": ["Express Pickup Counter", "QR Code Scanner", "VIP Lounge", "Free WiFi"],
+      "es": ["Mostrador de Recogida Express", "Escáner de Código QR", "Sala VIP", "WiFi Gratis"]
+    },
+    "pickupTime": {
+      "en": "Allow 15-30 minutes before your flight",
+      "es": "Reserve 15-30 minutos antes de su vuelo"
+    }
+  },
+  {
+    "id": "terminal-t2",
+    "code": "T2",
+    "name": {
+      "en": "Terminal 2 - International Hub",
+      "es": "Terminal 2 - Hub Internacional"
+    },
+    "airport": "JFK",
+    "stores": [
+      {
+        "name": "Ueta Travel World",
+        "location": "Gate B15, Level 2",
+        "hours": "04:30 - 23:30",
+        "categories": ["perfumes", "alcohol", "cosmetics", "electronics"]
+      },
+      {
+        "name": "Ueta Travel Luxury",
+        "location": "Gate B5, Departure Hall",
+        "hours": "05:00 - 23:00",
+        "categories": ["perfumes", "accessories", "cosmetics"]
+      }
+    ],
+    "features": {
+      "en": ["24/7 Pickup Lockers", "Personal Shopping Service", "Luxury Brands", "Tax Refund"],
+      "es": ["Casilleros 24/7", "Servicio de Compras Personal", "Marcas de Lujo", "Devolución de Impuestos"]
+    },
+    "pickupTime": {
+      "en": "Allow 20-40 minutes before your flight",
+      "es": "Reserve 20-40 minutos antes de su vuelo"
+    }
+  }
+]
