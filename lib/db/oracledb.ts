@@ -17,13 +17,8 @@ const poolConfig = {
 // Pool de conexiones global
 let pool: oracledb.Pool | null = null;
 
-// Configurar el directorio del wallet
-if (process.env.WALLET_LOCATION) {
-  oracledb.initOracleClient({
-    configDir: process.env.WALLET_LOCATION,
-    libDir: process.env.ORACLE_CLIENT_LIB_DIR
-  });
-}
+// Configurar el modo Thin (no requiere Oracle Instant Client)
+// El wallet se configurará automáticamente desde WALLET_LOCATION
 
 // Crear pool de conexiones
 export async function createPool() {
