@@ -1,8 +1,13 @@
 import oracledb from 'oracledb';
-import path from 'path';
 
-// Configuración del pool de conexiones
-const poolConfig = {
+// Pool de conexiones global
+let pool: oracledb.Pool | null = null;
+
+// Configurar node-oracledb en modo Thin (no requiere Oracle Instant Client)
+// El modo Thin está disponible desde node-oracledb 6.0+
+
+// Configuración del pool de conexiones para modo Thin
+const getPoolConfig = (): oracledb.PoolAttributes => ({
   user: process.env.DB_USER || 'ADMIN',
   password: process.env.DB_PASSWORD || '',
   connectString: process.env.DB_CONNECT_STRING || '',
@@ -11,24 +16,17 @@ const poolConfig = {
   poolIncrement: 1,
   poolTimeout: 60,
   queueTimeout: 60000,
-  enableStatistics: true
-};
-
-// Pool de conexiones global
-let pool: oracledb.Pool | null = null;
-
-// Configurar el directorio del wallet
-if (process.env.WALLET_LOCATION) {
-  oracledb.initOracleClient({
-    configDir: process.env.WALLET_LOCATION,
-    libDir: process.env.ORACLE_CLIENT_LIB_DIR
-  });
-}
+  enableStatistics: true,
+  // Configuración del wallet para modo Thin
+  walletLocation: process.env.WALLET_LOCATION,
+  walletPassword: process.env.WALLET_PASSWORD
+});
 
 // Crear pool de conexiones
 export async function createPool() {
   try {
     if (!pool) {
+      const poolConfig = getPoolConfig();
       pool = await oracledb.createPool(poolConfig);
       console.log('✅ Oracle Database connection pool created successfully');
     }

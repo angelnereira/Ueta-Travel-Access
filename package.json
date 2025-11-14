@@ -9,8 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "bcrypt": "^6.0.0",
     "dotenv": "^17.2.3",
     "next": "^14.2.0",
+    "oci-objectstorage": "^2.121.1",
     "oracledb": "^6.10.0",
     "qrcode.react": "^4.0.1",
     "react": "^18.3.0",
@@ -19,6 +22,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
+    "@types/oracledb": "^6.10.0",
     "@types/react": "^18.3.0",
     "@types/react-dom": "^18.3.0",
     "autoprefixer": "^10.4.0",
