@@ -1,50 +1,46 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { executeQuery } from '@/lib/db/oracledb';
+import { ProductService } from '@/lib/services/product.service';
+import { cache, CacheKeys, CacheTTL } from '@/lib/cache';
 
-// GET /api/products/[id] - Obtener un producto por ID o slug
+// GET /api/products/[id] - Get product by ID or slug
 export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
     const { id } = params;
-    const isNumeric = !isNaN(Number(id));
 
-    const sql = `
-      SELECT
-        p.product_id,
-        p.name,
-        p.slug,
-        p.description,
-        p.price,
-        p.discount_price,
-        p.stock_quantity,
-        p.image_url,
-        p.images,
-        p.specifications,
-        p.is_featured,
-        p.created_at,
-        p.updated_at,
-        c.name as category_name,
-        c.slug as category_slug
-      FROM products p
-      LEFT JOIN categories c ON p.category_id = c.category_id
-      WHERE ${isNumeric ? 'p.product_id = :id' : 'p.slug = :id'}
-        AND p.is_active = 1
-    `;
+    // Determine if ID is a slug or actual ID
+    const isSlug = id.includes('-');
 
-    const result = await executeQuery(sql, { id: isNumeric ? Number(id) : id });
+    const cacheKey = isSlug ? CacheKeys.productSlug(id) : CacheKeys.product(id);
 
-    if (!result.rows || result.rows.length === 0) {
+    const product = await cache.getOrSet(
+      cacheKey,
+      async () => {
+        return isSlug
+          ? await ProductService.getBySlug(id)
+          : await ProductService.getById(id);
+      },
+      CacheTTL.medium
+    );
+
+    if (!product) {
       return NextResponse.json(
         { success: false, error: 'Product not found' },
         { status: 404 }
       );
     }
 
+    // Get product images
+    const images = await ProductService.getImages(product.id);
+    if (images.length > 0) {
+      product.images = images;
+    }
+
     return NextResponse.json({
       success: true,
-      data: result.rows[0]
+      data: product
     });
   } catch (error: any) {
     console.error('Error fetching product:', error);

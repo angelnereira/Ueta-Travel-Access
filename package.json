@@ -11,6 +11,7 @@
   "dependencies": {
     "dotenv": "^17.2.3",
     "next": "^14.2.0",
+    "oci-objectstorage": "^2.121.1",
     "oracledb": "^6.10.0",
     "qrcode.react": "^4.0.1",
     "react": "^18.3.0",
