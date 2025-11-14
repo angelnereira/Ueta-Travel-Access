@@ -2,31 +2,26 @@ import { NextRequest, NextResponse } from 'next/server';
 import { AuthService } from '@/lib/services/auth.service';
 import { cookies } from 'next/headers';
 
-// POST /api/auth/login - User login
+// POST /api/auth/login - User login with email and password
 export async function POST(request: NextRequest) {
   try {
-    const { email } = await request.json();
+    const { email, password } = await request.json();
 
-    if (!email) {
+    if (!email || !password) {
       return NextResponse.json(
-        { success: false, error: 'Email is required' },
+        { success: false, error: 'Email and password are required' },
         { status: 400 }
       );
     }
 
-    // Get user by email
-    let user = await AuthService.getUserByEmail(email);
+    // Authenticate user
+    const user = await AuthService.authenticateUser(email, password);
 
-    // If user doesn't exist, create new user (simplified for demo)
     if (!user) {
-      const [firstName, ...rest] = email.split('@')[0].split('.');
-      const lastName = rest.join(' ') || 'User';
-
-      user = await AuthService.createUser({
-        email,
-        firstName: firstName.charAt(0).toUpperCase() + firstName.slice(1),
-        lastName: lastName.charAt(0).toUpperCase() + lastName.slice(1)
-      });
+      return NextResponse.json(
+        { success: false, error: 'Invalid email or password' },
+        { status: 401 }
+      );
     }
 
     // Generate session token

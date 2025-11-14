@@ -5,10 +5,12 @@
 
 import { executeQuery } from '@/lib/db/oracledb';
 import * as crypto from 'crypto';
+import * as bcrypt from 'bcrypt';
 
 interface UserRow {
   ID: string;
   EMAIL: string;
+  PASSWORD_HASH?: string;
   FIRST_NAME: string;
   LAST_NAME: string;
   PHONE: string;
@@ -16,6 +18,8 @@ interface UserRow {
   LOYALTY_TIER: string;
   LOYALTY_POINTS: number;
 }
+
+const SALT_ROUNDS = 10;
 
 export interface AuthUser {
   id: string;
@@ -30,8 +34,61 @@ export interface AuthUser {
 
 export class AuthService {
   /**
-   * Authenticate user by email
-   * Note: In production, implement proper password hashing with bcrypt
+   * Hash password using bcrypt
+   */
+  static async hashPassword(password: string): Promise<string> {
+    return await bcrypt.hash(password, SALT_ROUNDS);
+  }
+
+  /**
+   * Verify password against hash
+   */
+  static async verifyPassword(password: string, hash: string): Promise<boolean> {
+    return await bcrypt.compare(password, hash);
+  }
+
+  /**
+   * Authenticate user by email and password
+   */
+  static async authenticateUser(email: string, password: string): Promise<AuthUser | null> {
+    const sql = `
+      SELECT
+        id, email, password_hash, first_name, last_name, phone,
+        language, loyalty_tier, loyalty_points
+      FROM users
+      WHERE email = :email AND active = 1
+    `;
+
+    const result = await executeQuery<UserRow>(sql, { email });
+
+    if (!result.rows || result.rows.length === 0) {
+      return null;
+    }
+
+    const user = result.rows[0];
+
+    // Verify password if hash exists
+    if (user.PASSWORD_HASH) {
+      const isValid = await this.verifyPassword(password, user.PASSWORD_HASH);
+      if (!isValid) {
+        return null;
+      }
+    }
+
+    return {
+      id: user.ID,
+      email: user.EMAIL,
+      firstName: user.FIRST_NAME,
+      lastName: user.LAST_NAME,
+      phone: user.PHONE || '',
+      language: user.LANGUAGE,
+      loyaltyTier: user.LOYALTY_TIER,
+      loyaltyPoints: user.LOYALTY_POINTS
+    };
+  }
+
+  /**
+   * Get user by email (without password verification)
    */
   static async getUserByEmail(email: string): Promise<AuthUser | null> {
     const sql = `
@@ -93,23 +150,25 @@ export class AuthService {
   }
 
   /**
-   * Create new user
+   * Create new user with password
    */
   static async createUser(data: {
     email: string;
+    password: string;
     firstName: string;
     lastName: string;
     phone?: string;
     language?: string;
   }): Promise<AuthUser> {
     const userId = `user-${Date.now()}`;
+    const passwordHash = await this.hashPassword(data.password);
 
     const sql = `
       INSERT INTO users (
-        id, email, first_name, last_name, phone, language,
+        id, email, password_hash, first_name, last_name, phone, language,
         loyalty_tier, loyalty_points, active
       ) VALUES (
-        :id, :email, :firstName, :lastName, :phone, :language,
+        :id, :email, :passwordHash, :firstName, :lastName, :phone, :language,
         'bronze', 0, 1
       )
     `;
@@ -117,6 +176,7 @@ export class AuthService {
     await executeQuery(sql, {
       id: userId,
       email: data.email,
+      passwordHash,
       firstName: data.firstName,
       lastName: data.lastName,
       phone: data.phone || null,
@@ -129,6 +189,21 @@ export class AuthService {
     }
 
     return user;
+  }
+
+  /**
+   * Update user password
+   */
+  static async updatePassword(userId: string, newPassword: string): Promise<void> {
+    const passwordHash = await this.hashPassword(newPassword);
+
+    const sql = `
+      UPDATE users
+      SET password_hash = :passwordHash, updated_at = CURRENT_TIMESTAMP
+      WHERE id = :userId
+    `;
+
+    await executeQuery(sql, { userId, passwordHash });
   }
 
   /**

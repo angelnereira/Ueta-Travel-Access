@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "bcrypt": "^6.0.0",
     "dotenv": "^17.2.3",
     "next": "^14.2.0",
     "oci-objectstorage": "^2.121.1",

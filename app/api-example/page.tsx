@@ -247,14 +247,85 @@ export default async function ApiExamplePage() {
         {/* API Endpoints */}
         <section className="mt-12 bg-gray-900 text-white p-6 rounded-lg">
           <h2 className="text-2xl font-bold mb-4">Available API Endpoints</h2>
-          <div className="space-y-2 font-mono text-sm">
-            <div><span className="text-green-400">GET</span> /api/products</div>
-            <div><span className="text-green-400">GET</span> /api/products/[id]</div>
-            <div><span className="text-green-400">GET</span> /api/categories</div>
-            <div><span className="text-blue-400">POST</span> /api/auth/login</div>
-            <div><span className="text-green-400">GET</span> /api/auth/me</div>
-            <div><span className="text-blue-400">POST</span> /api/auth/logout</div>
-            <div><span className="text-blue-400">POST</span> /api/upload</div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Authentication */}
+            <div>
+              <h3 className="text-lg font-semibold mb-3 text-blue-300">Authentication</h3>
+              <div className="space-y-1 font-mono text-sm">
+                <div><span className="text-blue-400">POST</span> /api/auth/register</div>
+                <div><span className="text-blue-400">POST</span> /api/auth/login</div>
+                <div><span className="text-blue-400">POST</span> /api/auth/change-password</div>
+                <div><span className="text-green-400">GET</span> /api/auth/me</div>
+                <div><span className="text-yellow-400">PATCH</span> /api/auth/me</div>
+                <div><span className="text-blue-400">POST</span> /api/auth/logout</div>
+              </div>
+            </div>
+
+            {/* Products */}
+            <div>
+              <h3 className="text-lg font-semibold mb-3 text-blue-300">Products</h3>
+              <div className="space-y-1 font-mono text-sm">
+                <div><span className="text-green-400">GET</span> /api/products</div>
+                <div><span className="text-green-400">GET</span> /api/products/[id]</div>
+                <div><span className="text-green-400">GET</span> /api/products/[id]/reviews</div>
+              </div>
+            </div>
+
+            {/* Categories */}
+            <div>
+              <h3 className="text-lg font-semibold mb-3 text-blue-300">Categories</h3>
+              <div className="space-y-1 font-mono text-sm">
+                <div><span className="text-green-400">GET</span> /api/categories</div>
+              </div>
+            </div>
+
+            {/* Orders */}
+            <div>
+              <h3 className="text-lg font-semibold mb-3 text-blue-300">Orders</h3>
+              <div className="space-y-1 font-mono text-sm">
+                <div><span className="text-green-400">GET</span> /api/orders</div>
+                <div><span className="text-blue-400">POST</span> /api/orders</div>
+                <div><span className="text-green-400">GET</span> /api/orders/[id]</div>
+                <div><span className="text-yellow-400">PATCH</span> /api/orders/[id]</div>
+                <div><span className="text-red-400">DELETE</span> /api/orders/[id]</div>
+              </div>
+            </div>
+
+            {/* Reviews */}
+            <div>
+              <h3 className="text-lg font-semibold mb-3 text-blue-300">Reviews</h3>
+              <div className="space-y-1 font-mono text-sm">
+                <div><span className="text-blue-400">POST</span> /api/reviews</div>
+                <div><span className="text-blue-400">POST</span> /api/reviews/[id]/helpful</div>
+              </div>
+            </div>
+
+            {/* Coupons */}
+            <div>
+              <h3 className="text-lg font-semibold mb-3 text-blue-300">Coupons</h3>
+              <div className="space-y-1 font-mono text-sm">
+                <div><span className="text-green-400">GET</span> /api/coupons</div>
+                <div><span className="text-blue-400">POST</span> /api/coupons/validate</div>
+                <div><span className="text-blue-400">POST</span> /api/coupons/apply</div>
+              </div>
+            </div>
+
+            {/* Upload */}
+            <div>
+              <h3 className="text-lg font-semibold mb-3 text-blue-300">File Upload</h3>
+              <div className="space-y-1 font-mono text-sm">
+                <div><span className="text-green-400">GET</span> /api/upload</div>
+                <div><span className="text-blue-400">POST</span> /api/upload</div>
+                <div><span className="text-red-400">DELETE</span> /api/upload</div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-6 p-4 bg-gray-800 rounded">
+            <p className="text-sm text-gray-300">
+              For complete API documentation, see <span className="text-blue-400 font-mono">API_DOCUMENTATION.md</span>
+            </p>
           </div>
         </section>
       </div>
