@@ -26,6 +26,13 @@ yarn-error.log*
 
 # local env files
 .env*.local
+.env
+.env.production
+
+# Oracle wallet
+/wallet/
+*.sso
+*.p12
 
 # vercel
 .vercel
