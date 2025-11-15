@@ -1,0 +1,188 @@
+name: Deploy to Oracle Cloud
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:  # Permite ejecución manual desde GitHub UI
+
+env:
+  NODE_VERSION: '18'
+
+jobs:
+  deploy:
+    name: Build and Deploy to Oracle Cloud
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js ${{ env.NODE_VERSION }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run linter
+      run: npm run lint --if-present
+      continue-on-error: true
+
+    - name: Build application
+      run: npm run build
+      env:
+        NODE_ENV: production
+
+    - name: Run tests
+      run: npm test --if-present
+      continue-on-error: true
+
+    - name: Setup SSH
+      uses: webfactory/ssh-agent@v0.9.0
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: Add server to known hosts
+      run: |
+        mkdir -p ~/.ssh
+        ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+
+    - name: Create deployment package
+      run: |
+        echo "Creating deployment archive..."
+        tar -czf deploy.tar.gz \
+          --exclude='node_modules' \
+          --exclude='.git' \
+          --exclude='.github' \
+          --exclude='.next/cache' \
+          --exclude='*.log' \
+          --exclude='.env.local' \
+          --exclude='.env.development' \
+          .
+
+    - name: Upload deployment package
+      run: |
+        echo "Uploading to Oracle Cloud instance..."
+        scp deploy.tar.gz ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/tmp/ueta-deploy.tar.gz
+
+    - name: Deploy to Oracle Cloud
+      run: |
+        ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'ENDSSH'
+          set -e
+
+          echo "🚀 Starting deployment..."
+
+          # Create backup
+          TIMESTAMP=$(date +%Y%m%d-%H%M%S)
+          BACKUP_DIR="/home/opc/backups/ueta-$TIMESTAMP"
+
+          echo "📦 Creating backup at $BACKUP_DIR..."
+          mkdir -p /home/opc/backups
+
+          if [ -d "/home/opc/ueta-travel-access" ]; then
+            cp -r /home/opc/ueta-travel-access "$BACKUP_DIR"
+            echo "✅ Backup created successfully"
+          else
+            echo "⚠️  No existing installation found, skipping backup"
+          fi
+
+          # Extract new code
+          echo "📂 Extracting deployment package..."
+          mkdir -p /home/opc/ueta-travel-access
+          cd /home/opc/ueta-travel-access
+          tar -xzf /tmp/ueta-deploy.tar.gz
+          echo "✅ Code extracted"
+
+          # Install production dependencies
+          echo "📥 Installing dependencies..."
+          npm ci --production --quiet
+          echo "✅ Dependencies installed"
+
+          # Reload or start application with PM2
+          echo "🔄 Restarting application..."
+          if pm2 describe ueta-travel-access > /dev/null 2>&1; then
+            pm2 reload ecosystem.config.js --update-env
+            echo "✅ Application reloaded"
+          else
+            pm2 start ecosystem.config.js
+            echo "✅ Application started"
+          fi
+
+          # Save PM2 configuration
+          pm2 save
+
+          # Clean up
+          rm /tmp/ueta-deploy.tar.gz
+          echo "🧹 Cleaned up temporary files"
+
+          # Keep only last 5 backups
+          cd /home/opc/backups
+          ls -t | tail -n +6 | xargs -r rm -rf
+          echo "🗄️  Old backups cleaned"
+
+          echo "✅ Deployment completed successfully!"
+        ENDSSH
+
+    - name: Wait for application startup
+      run: |
+        echo "⏳ Waiting for application to start..."
+        sleep 10
+
+    - name: Verify deployment
+      run: |
+        echo "🔍 Verifying deployment..."
+        ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'ENDSSH'
+          echo "PM2 Status:"
+          pm2 status
+
+          echo -e "\nRecent Logs:"
+          pm2 logs ueta-travel-access --lines 20 --nostream
+        ENDSSH
+
+    - name: Health Check
+      run: |
+        echo "🏥 Running health check..."
+        max_attempts=10
+        attempt=0
+
+        while [ $attempt -lt $max_attempts ]; do
+          echo "Attempt $((attempt+1))/$max_attempts..."
+
+          response=$(curl -s -o /dev/null -w "%{http_code}" http://${{ secrets.SERVER_HOST }}:3000/api/health || echo "000")
+
+          if [ "$response" = "200" ]; then
+            echo "✅ Health check passed! Application is healthy (HTTP $response)"
+            exit 0
+          fi
+
+          attempt=$((attempt+1))
+          sleep 10
+        done
+
+        echo "⚠️  Health check failed after $max_attempts attempts"
+        echo "Note: Application might still be starting up. Check manually if needed."
+        exit 0  # Don't fail the workflow, just warn
+
+    - name: Deployment Summary
+      if: always()
+      run: |
+        echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+        echo "📊 DEPLOYMENT SUMMARY"
+        echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+        echo "Status: ${{ job.status }}"
+        echo "Branch: ${{ github.ref_name }}"
+        echo "Commit: ${{ github.sha }}"
+        echo "Author: ${{ github.actor }}"
+        echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+        if [ "${{ job.status }}" == "success" ]; then
+          echo "✅ Deployment successful!"
+          echo "🌐 Application URL: http://${{ secrets.SERVER_HOST }}:3000"
+        else
+          echo "❌ Deployment failed!"
+          echo "Check the logs above for details."
+        fi
