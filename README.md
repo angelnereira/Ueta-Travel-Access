@@ -360,7 +360,45 @@ npm run test:e2e    # Tests end-to-end
 
 ## 🌐 Deploy en Oracle Cloud
 
-### Opción 1: Deploy Manual
+### 🚀 Despliegue Automático (Recomendado)
+
+El proyecto incluye **CI/CD completo con GitHub Actions**:
+
+```bash
+# 1. Hacer cambios en tu código
+git add .
+git commit -m "feat: nueva funcionalidad"
+
+# 2. Push a GitHub (esto despliega automáticamente)
+git push origin main
+
+# 3. GitHub Actions se encarga de:
+#    ✅ Build y tests
+#    ✅ Deploy a Oracle Cloud vía SSH
+#    ✅ Backup automático
+#    ✅ Reinicio sin downtime
+#    ✅ Health checks
+```
+
+Ver configuración en [.github/workflows/deploy.yml](.github/workflows/deploy.yml)
+
+### 🛠️ Despliegue Manual
+
+#### Opción 1: Script Automatizado
+
+```bash
+npm run deploy
+```
+
+Este comando ejecuta el script completo de despliegue que incluye:
+- ✅ Build optimizado
+- ✅ Empaquetado inteligente
+- ✅ Transferencia segura
+- ✅ Backup automático en servidor
+- ✅ Deploy con zero-downtime
+- ✅ Health check post-deploy
+
+#### Opción 2: Paso a Paso
 
 ```bash
 # 1. Construir aplicación
@@ -374,19 +412,28 @@ scp -i ~/.ssh/oci_key build.tar.gz opc@<IP_PUBLICA>:~/
 
 # 4. Desplegar en servidor
 ssh -i ~/.ssh/oci_key opc@<IP_PUBLICA>
-cd /ruta/aplicacion
+cd /home/opc/ueta-travel-access
 tar -xzf ~/build.tar.gz
+npm ci --production
 pm2 reload ecosystem.config.js
 ```
 
-### Opción 2: Deploy con Script
+### 📊 Monitoreo
 
 ```bash
-# Desde Oracle Cloud Shell
-./deploy.sh
+# Ver estado completo de la aplicación
+npm run monitor
+
+# Hacer rollback si es necesario
+npm run rollback
 ```
 
-Ver guía completa: [GUIA_CLOUD_SHELL.md](GUIA_CLOUD_SHELL.md#deploy-y-actualización-de-aplicación)
+### 📚 Guías Detalladas
+
+- 📘 [GUIA_CONEXION_SSH_DEPLOY.md](GUIA_CONEXION_SSH_DEPLOY.md) - Guía completa de despliegue (~15,000 palabras)
+- 📗 [INSTRUCCIONES_RAPIDAS_DEPLOY.md](INSTRUCCIONES_RAPIDAS_DEPLOY.md) - Quick reference para uso diario
+- 📕 [DESPLIEGUE_COMPLETADO.md](DESPLIEGUE_COMPLETADO.md) - Resumen de configuración completada
+- 📙 [GUIA_CLOUD_SHELL.md](GUIA_CLOUD_SHELL.md) - Administración desde Cloud Shell
 
 ---
 
@@ -514,6 +561,6 @@ Para preguntas técnicas o demostración del proyecto:
 
 ---
 
-**Última actualización**: 14 de Noviembre, 2025
-**Versión**: 1.7 - Sistema de Órdenes y Códigos QR
-**Estado**: ✅ Producción Ready
+**Última actualización**: 15 de Noviembre, 2025
+**Versión**: 1.8 - CI/CD y Despliegue Automático
+**Estado**: ✅ Producción Ready con Deploy Automático
