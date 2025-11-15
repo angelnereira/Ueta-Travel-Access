@@ -10,7 +10,9 @@
     "deploy": "./scripts/deploy-to-oracle.sh",
     "rollback": "./scripts/rollback.sh",
     "monitor": "./scripts/monitor-deploy.sh",
-    "deploy:watch": "./scripts/deploy-to-oracle.sh && ./scripts/monitor-deploy.sh"
+    "deploy:watch": "./scripts/deploy-to-oracle.sh && ./scripts/monitor-deploy.sh",
+    "db:seed": "node scripts/seed-products.js",
+    "db:schema": "node scripts/create-schema.js"
   },
   "dependencies": {
     "@types/bcrypt": "^6.0.0",
