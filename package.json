@@ -6,7 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "deploy": "./scripts/deploy-to-oracle.sh",
+    "rollback": "./scripts/rollback.sh",
+    "monitor": "./scripts/monitor-deploy.sh",
+    "deploy:watch": "./scripts/deploy-to-oracle.sh && ./scripts/monitor-deploy.sh"
   },
   "dependencies": {
     "@types/bcrypt": "^6.0.0",
