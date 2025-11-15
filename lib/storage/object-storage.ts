@@ -42,14 +42,15 @@ class ObjectStorageService {
       // Use Instance Principal authentication (for OCI compute instances)
       // or config file authentication for local development
       const provider = process.env.NODE_ENV === 'production'
-        ? new common.InstancePrincipalsAuthenticationDetailsProvider()
+        ? await new common.InstancePrincipalsAuthenticationDetailsProviderBuilder().build()
         : new common.ConfigFileAuthenticationDetailsProvider();
 
       this.client = new os.ObjectStorageClient({
         authenticationDetailsProvider: provider
       });
 
-      this.client.region = this.region;
+      // Set region
+      this.client.region = this.region as any;
 
       console.log('✅ Object Storage client initialized');
       return this.client;

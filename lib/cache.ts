@@ -56,8 +56,10 @@ class Cache {
     // 5 min default TTL
     // If cache is full, remove oldest entry (first in Map)
     if (this.cache.size >= this.maxSize) {
-      const firstKey = this.cache.keys().next().value;
-      this.cache.delete(firstKey);
+      const keys = Array.from(this.cache.keys());
+      if (keys.length > 0) {
+        this.cache.delete(keys[0]);
+      }
     }
 
     this.cache.set(key, {
@@ -79,11 +81,12 @@ class Cache {
    */
   deletePattern(pattern: string): void {
     const regex = new RegExp(pattern);
-    for (const key of this.cache.keys()) {
+    const keys = Array.from(this.cache.keys());
+    keys.forEach(key => {
       if (regex.test(key)) {
         this.cache.delete(key);
       }
-    }
+    });
   }
 
   /**

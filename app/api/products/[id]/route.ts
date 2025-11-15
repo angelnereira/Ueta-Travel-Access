@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { ProductService } from '@/lib/services/product.service';
 import { cache, CacheKeys, CacheTTL } from '@/lib/cache';
+import { getConnection } from '@/lib/db/oracledb';
 
 // GET /api/products/[id] - Get product by ID or slug
 export async function GET(
@@ -75,6 +76,8 @@ export async function PUT(
       is_active
     } = body;
 
+    const connection = await getConnection();
+
     const sql = `
       UPDATE products SET
         category_id = :category_id,
@@ -109,7 +112,12 @@ export async function PUT(
       is_active: is_active !== undefined ? (is_active ? 1 : 0) : 1
     };
 
-    await executeQuery(sql, binds);
+    await connection.execute(sql, binds, { autoCommit: true });
+    await connection.close();
+
+    // Invalidate cache
+    cache.delete(CacheKeys.product(id));
+    cache.delete(CacheKeys.featuredProducts());
 
     return NextResponse.json({
       success: true,
@@ -132,13 +140,20 @@ export async function DELETE(
   try {
     const { id } = params;
 
+    const connection = await getConnection();
+
     const sql = `
       UPDATE products
       SET is_active = 0, updated_at = CURRENT_TIMESTAMP
       WHERE product_id = :product_id
     `;
 
-    await executeQuery(sql, { product_id: Number(id) });
+    await connection.execute(sql, { product_id: Number(id) }, { autoCommit: true });
+    await connection.close();
+
+    // Invalidate cache
+    cache.delete(CacheKeys.product(id));
+    cache.delete(CacheKeys.featuredProducts());
 
     return NextResponse.json({
       success: true,

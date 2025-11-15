@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { productId, rating, comment } = await request.json();
+    const { productId, rating, comment, title } = await request.json();
 
     if (!productId || !rating) {
       return NextResponse.json(
@@ -44,7 +44,8 @@ export async function POST(request: NextRequest) {
       userId,
       productId,
       rating,
-      comment
+      title: title || { en: '', es: '' },
+      comment: comment || { en: '', es: '' }
     });
 
     return NextResponse.json({
