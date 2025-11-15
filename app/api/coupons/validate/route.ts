@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
 
     if (!validation.valid) {
       return NextResponse.json(
-        { success: false, error: validation.error },
+        { success: false, error: validation.message || 'Invalid coupon' },
         { status: 400 }
       );
     }

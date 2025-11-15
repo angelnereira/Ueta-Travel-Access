@@ -12,7 +12,7 @@ export async function GET(
     const offset = parseInt(searchParams.get('offset') || '0');
 
     const [reviews, stats] = await Promise.all([
-      ReviewService.getByProductId(params.id, limit, offset),
+      ReviewService.getByProductId(params.id, limit),
       ReviewService.getStats(params.id)
     ]);
 
