@@ -18,11 +18,11 @@ export async function GET(request: NextRequest) {
     if (search) {
       const products = await ProductService.search(search, limit);
       const safeSearch = safeDecycle(products);
-      return NextResponse.json({
+      return new Response(JSON.stringify({
         success: true,
         data: safeSearch,
         count: Array.isArray(safeSearch) ? safeSearch.length : 0
-      });
+      }), { headers: { 'Content-Type': 'application/json' } });
     }
 
     // Build cache key
@@ -55,12 +55,12 @@ export async function GET(request: NextRequest) {
   // Ensure response is plain JSON (avoid circular structures from cached objects)
   const safeProducts = safeDecycle(products);
 
-    return NextResponse.json({
+    return new Response(JSON.stringify({
       success: true,
       data: safeProducts,
       count: Array.isArray(safeProducts) ? safeProducts.length : 0,
       cached: cache.get(cacheKey) !== null
-    });
+    }), { headers: { 'Content-Type': 'application/json' } });
   } catch (error: any) {
     console.error('Error fetching products:', error);
     return NextResponse.json(
