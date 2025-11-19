@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
     // Handle search separately
     if (search) {
       const products = await ProductService.search(search, limit);
-      const safeSearch = JSON.parse(JSON.stringify(products));
+      const safeSearch = safeDecycle(products);
       return NextResponse.json({
         success: true,
         data: safeSearch,
@@ -52,8 +52,8 @@ export async function GET(request: NextRequest) {
       CacheTTL.medium
     );
 
-    // Ensure response is plain JSON (avoid circular structures from cached objects)
-    const safeProducts = JSON.parse(JSON.stringify(products));
+  // Ensure response is plain JSON (avoid circular structures from cached objects)
+  const safeProducts = safeDecycle(products);
 
     return NextResponse.json({
       success: true,
@@ -67,5 +67,25 @@ export async function GET(request: NextRequest) {
       { success: false, error: error.message },
       { status: 500 }
     );
+  }
+}
+
+// Helper: convert a value to a pure JSON-safe structure removing cycles
+function safeDecycle<T>(value: T): any {
+  try {
+    const seen = new WeakSet();
+    return JSON.parse(
+      JSON.stringify(value, function (_key, val) {
+        if (typeof val === 'object' && val !== null) {
+          if (seen.has(val)) return null;
+          seen.add(val);
+        }
+        return val;
+      })
+    );
+  } catch (err) {
+    // Fallback: if serialization fails, return an empty array or object
+    if (Array.isArray(value)) return [];
+    return {};
   }
 }
