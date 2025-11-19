@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import util from 'util';
 import { ProductService } from '@/lib/services/product.service';
 import { cache, CacheKeys, CacheTTL } from '@/lib/cache';
 
@@ -54,6 +55,19 @@ export async function GET(request: NextRequest) {
 
   // Ensure response is plain JSON (avoid circular structures from cached objects)
   const safeProducts = safeDecycle(products);
+
+    // DEBUG: inspect a sample product to find circular references
+    try {
+      if (Array.isArray(safeProducts) && safeProducts.length > 0) {
+        console.log('PRODUCT_SAMPLE_TYPE:', typeof safeProducts[0]);
+        console.log('PRODUCT_SAMPLE_KEYS:', Object.keys(safeProducts[0]));
+        console.log('PRODUCT_SAMPLE_INSPECT:', util.inspect(safeProducts[0], { depth: 4 }));
+      } else {
+        console.log('PRODUCT_SAMPLE: empty or not array');
+      }
+    } catch (dbgErr) {
+      console.error('DEBUG inspect failed:', dbgErr);
+    }
 
     return new Response(JSON.stringify({
       success: true,
