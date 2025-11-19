@@ -53,8 +53,20 @@ export async function GET(request: NextRequest) {
       CacheTTL.medium
     );
 
-  // Ensure response is plain JSON (avoid circular structures from cached objects)
-  const safeProducts = safeDecycle(products);
+    // Reduce to minimal DTOs first (only primitives) to avoid circular refs
+    const minimal = (Array.isArray(products) ? products : []).map(p => ({
+      id: p.id,
+      slug: p.slug,
+      name_en: p.name?.en || '',
+      price: p.price,
+      image: p.image || '',
+      category: p.category || '',
+      stock: p.stock || 0,
+      terminal: p.terminal || ''
+    }));
+
+    // Ensure response is plain JSON (avoid circular structures from cached objects)
+    const safeProducts = safeDecycle(minimal);
 
     // DEBUG: inspect a sample product to find circular references
     try {
