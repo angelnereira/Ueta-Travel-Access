@@ -17,10 +17,11 @@ export async function GET(request: NextRequest) {
     // Handle search separately
     if (search) {
       const products = await ProductService.search(search, limit);
+      const safeSearch = JSON.parse(JSON.stringify(products));
       return NextResponse.json({
         success: true,
-        data: products,
-        count: products.length
+        data: safeSearch,
+        count: Array.isArray(safeSearch) ? safeSearch.length : 0
       });
     }
 
@@ -51,10 +52,13 @@ export async function GET(request: NextRequest) {
       CacheTTL.medium
     );
 
+    // Ensure response is plain JSON (avoid circular structures from cached objects)
+    const safeProducts = JSON.parse(JSON.stringify(products));
+
     return NextResponse.json({
       success: true,
-      data: products,
-      count: products.length,
+      data: safeProducts,
+      count: Array.isArray(safeProducts) ? safeProducts.length : 0,
       cached: cache.get(cacheKey) !== null
     });
   } catch (error: any) {
